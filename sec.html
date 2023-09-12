@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>body {
+
+    font-family: Arial, sans-serif;
+
+    margin: 0;
+
+    padding: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    height: 100vh;
+
+    background-color: #f0f0f0;
+
+}
+
+ 
+
+.country-container {
+
+    background-color: #fff;
+
+    padding: 20px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+ 
+
+.country-info {
+
+    margin-top: 20px;
+
+}</style>
+    <title>Country Information App</title>
+
+</head>
+
+<body>
+
+    <div class="country-container">
+
+        <h1>Country Information App</h1>
+
+        <div class="country-info">
+
+            <p>Loading...</p>
+
+        </div>
+
+    </div>
+
+    <script>// Select the HTML elements
+        const countryInfoContainer = document.querySelector('.country-info');
+        
+        // Function to fetch country data from the API and update the HTML
+        async function fetchAndDisplayCountryData() {
+          try {
+            // Fetch data from the Rest Countries API
+            const response = await fetch('https://restcountries.com/v2/all');
+            const countriesData = await response.json();
+        
+            // Randomly select a country from the array
+            const randomIndex = Math.floor(Math.random() * countriesData.length);
+            const randomCountry = countriesData[randomIndex];
+        
+            // Create HTML content to display country information
+            const countryHTML = `
+              <h2>${randomCountry.name}</h2>
+              <p>Capital: ${randomCountry.capital}</p>
+              <p>Population: ${randomCountry.population}</p>
+              <p>Region: ${randomCountry.region}</p>
+              <p>Subregion: ${randomCountry.subregion}</p>
+              <p>Timezones: ${randomCountry.timezones.join(', ')}</p>
+              <p>Currencies: ${randomCountry.currencies.map((currency) => currency.name).join(', ')}</p>
+              <p>Languages: ${randomCountry.languages.map((language) => language.name).join(', ')}</p>
+              <img src="${randomCountry.flags.png}" alt="${randomCountry.name} Flag">
+            `;
+        
+            // Update the country information on the webpage
+            countryInfoContainer.innerHTML = countryHTML;
+          } catch (error) {
+            console.error('Error fetching and displaying country data:', error);
+            countryInfoContainer.innerHTML = 'An error occurred while fetching country data.';
+          }
+        }
+        
+        // Call the function to fetch and display country data when the page loads
+        fetchAndDisplayCountryData();
+        </script>
+
+</body>
+
+</html>
+
+
+
+ 
+
